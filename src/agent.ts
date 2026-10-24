@@ -127,7 +127,8 @@ export async function runAgent(c:RunConfig,emit:(e:LabEvent)=>void,controller=ne
    if(!gotResult)throw new Error("No typed SDK result received.");
   }finally{run.close();}
  }catch(error) {
-  if(c.mode!=="invalid" || started || !/skill|wildcard/i.test(String(error)))throw error;
+  if(c.mode!=="invalid" || started || !(error instanceof Error)
+   || !/^Invalid skill name ['"]\*['"]:/.test(error.message))throw error;
   rejected=true;
   emit({type:"rejected",stage:"SDK option validation before init",text:redact(error instanceof Error ? error.message : String(error))});
  }

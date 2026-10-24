@@ -86,7 +86,7 @@
       "anchors": [
         "c=validateConfig(c);const id=randomUUID(),files=await prepareWorkspace(c,id);"
       ],
-      "sourceSHA256": "d2f5d22d73e52bb1885529cf6690eae3437f8a83aec7a6c363be6964452feb8d",
+      "sourceSHA256": "c05391cba2cdfc8e2280d13e0cadb39cfbf0ad4225b4a53bce4e62c3d91d196a",
       "narration": "Step 1. Accept only fixed classroom modes. No arbitrary skill code, prompt, path or command can be submitted by the browser. This source excerpt shows the corresponding application statement."
     },
     {
@@ -101,7 +101,7 @@
       "anchors": [
         "for(const file of files)await writeFile(file.path,file.contents);"
       ],
-      "sourceSHA256": "d2f5d22d73e52bb1885529cf6690eae3437f8a83aec7a6c363be6964452feb8d",
+      "sourceSHA256": "c05391cba2cdfc8e2280d13e0cadb39cfbf0ad4225b4a53bce4e62c3d91d196a",
       "narration": "Step 2. The host writes two trusted skills as filesystem artifacts before starting the SDK. Full contents are not inserted into the task prompt. This source excerpt shows the corresponding application statement."
     },
     {
@@ -116,7 +116,7 @@
       "anchors": [
         "if(mode===\"omitted\")return undefined;"
       ],
-      "sourceSHA256": "d2f5d22d73e52bb1885529cf6690eae3437f8a83aec7a6c363be6964452feb8d",
+      "sourceSHA256": "c05391cba2cdfc8e2280d13e0cadb39cfbf0ad4225b4a53bce4e62c3d91d196a",
       "narration": "Step 3. The factory preserves actual omission, enables all skills, selects one exact name, disables model invocation, or passes an invalid wildcard for the SDK to reject. This source excerpt shows the corresponding application statement."
     },
     {
@@ -131,7 +131,7 @@
       "anchors": [
         "settingSources:c.mode===\"no-source\" ? [] : [\"project\"],"
       ],
-      "sourceSHA256": "d2f5d22d73e52bb1885529cf6690eae3437f8a83aec7a6c363be6964452feb8d",
+      "sourceSHA256": "c05391cba2cdfc8e2280d13e0cadb39cfbf0ad4225b4a53bce4e62c3d91d196a",
       "narration": "Step 4. Project source loads classroom skill metadata. The broken-source experiment uses [] while the actual files remain on disk. This source excerpt shows the corresponding application statement."
     },
     {
@@ -146,7 +146,7 @@
       "anchors": [
         "tools:[\"Read\",\"Skill\"],allowedTools:[\"Read\",\"Skill\"],"
       ],
-      "sourceSHA256": "d2f5d22d73e52bb1885529cf6690eae3437f8a83aec7a6c363be6964452feb8d",
+      "sourceSHA256": "c05391cba2cdfc8e2280d13e0cadb39cfbf0ad4225b4a53bce4e62c3d91d196a",
       "narration": "Step 5. When tools is explicit, Skill must be included. Invocation scope and general tool availability are separate configuration layers. This source excerpt shows the corresponding application statement."
     },
     {
@@ -161,7 +161,7 @@
       "anchors": [
         "if(name===\"Skill\")return [\"catalog-summary\",\"api-review\"].includes(String(input.skill));"
       ],
-      "sourceSHA256": "d2f5d22d73e52bb1885529cf6690eae3437f8a83aec7a6c363be6964452feb8d",
+      "sourceSHA256": "c05391cba2cdfc8e2280d13e0cadb39cfbf0ad4225b4a53bce4e62c3d91d196a",
       "narration": "Step 6. The host supports only the two classroom Skill names and exact catalog.md reads. Read cannot fetch SKILL.md; Bash, Write and Edit are unavailable. This source excerpt shows the corresponding application statement."
     },
     {
@@ -176,7 +176,7 @@
       "anchors": [
         "const prompt=c.mode===\"slash\" ? PROMPTS.slash : [\"none\",\"no-source\"].includes(c.mode) ? PROMPTS.plain : PROMPTS.summary;"
       ],
-      "sourceSHA256": "d2f5d22d73e52bb1885529cf6690eae3437f8a83aec7a6c363be6964452feb8d",
+      "sourceSHA256": "c05391cba2cdfc8e2280d13e0cadb39cfbf0ad4225b4a53bce4e62c3d91d196a",
       "narration": "Step 7. A normal prompt asks the model to invoke a matching available skill. The slash case deliberately uses /api-review, whose dispatch is independent of the model skills list. This source excerpt shows the corresponding application statement."
     },
     {
@@ -191,7 +191,7 @@
       "anchors": [
         "const run=query({prompt,options});"
       ],
-      "sourceSHA256": "d2f5d22d73e52bb1885529cf6690eae3437f8a83aec7a6c363be6964452feb8d",
+      "sourceSHA256": "c05391cba2cdfc8e2280d13e0cadb39cfbf0ad4225b4a53bce4e62c3d91d196a",
       "narration": "Step 8. The SDK discovers metadata, handles selected skill invocation and owns the model/tool loop. The wildcard mode exercises its real startup validator. This source excerpt shows the corresponding application statement."
     },
     {
@@ -206,7 +206,7 @@
       "anchors": [
         "started=true;initSkills=message.skills;"
       ],
-      "sourceSHA256": "d2f5d22d73e52bb1885529cf6690eae3437f8a83aec7a6c363be6964452feb8d",
+      "sourceSHA256": "c05391cba2cdfc8e2280d13e0cadb39cfbf0ad4225b4a53bce4e62c3d91d196a",
       "narration": "Step 9. The init array lists user-invocable skills and can include bundled entries. It is not the model allowlist, and does not prove invocation. This source excerpt shows the corresponding application statement."
     },
     {
@@ -221,22 +221,22 @@
       "anchors": [
         "if(input.tool_name===\"Skill\")skillCalls.push(String(v.skill));"
       ],
-      "sourceSHA256": "d2f5d22d73e52bb1885529cf6690eae3437f8a83aec7a6c363be6964452feb8d",
+      "sourceSHA256": "c05391cba2cdfc8e2280d13e0cadb39cfbf0ad4225b4a53bce4e62c3d91d196a",
       "narration": "Step 10. A completed Skill tool call is independent evidence of model invocation. Slash dispatch can load a skill without such a tool call. This source excerpt shows the corresponding application statement."
     },
     {
       "number": 11,
       "title": "Keep SDK validation errors factual",
       "source": "src/agent.ts",
-      "code": "if(c.mode!==\"invalid\" || started || !/skill|wildcard/i.test(String(error)))throw error;\n  rejected=true;\n  emit({type:\"rejected\",stage:\"SDK option validation before init\",text:redact(error instanceof Error ? error.message : String(error))});",
+      "code": "if(c.mode!==\"invalid\" || started || !(error instanceof Error)\n   || !/^Invalid skill name ['\"]\\*['\"]:/.test(error.message))throw error;\n  rejected=true;",
       "language": "typescript",
       "explanation": "Only an actual SDK skill-name validation error before init becomes the rejected outcome. Other errors remain failures rather than being relabelled as a successful exercise.",
       "firstLine": 130,
       "lastLine": 132,
       "anchors": [
-        "if(c.mode!==\"invalid\" || started || !/skill|wildcard/i.test(String(error)))throw error;"
+        "if(c.mode!==\"invalid\" || started || !(error instanceof Error)"
       ],
-      "sourceSHA256": "d2f5d22d73e52bb1885529cf6690eae3437f8a83aec7a6c363be6964452feb8d",
+      "sourceSHA256": "c05391cba2cdfc8e2280d13e0cadb39cfbf0ad4225b4a53bce4e62c3d91d196a",
       "narration": "Step 11. Only an actual SDK skill-name validation error before init becomes the rejected outcome. Other errors remain failures rather than being relabelled as a successful exercise. This source excerpt shows the corresponding application statement."
     },
     {
@@ -246,12 +246,12 @@
       "code": "const savedFilesUnchanged=(await Promise.all(files.map(async(f,i)=>digest(await readFile(f.path,\"utf8\"))===before[i]))).every(Boolean);",
       "language": "typescript",
       "explanation": "Compare saved skill hashes and extract markers from actual text. Marker compliance is an observation, not a complete internal prompt audit.",
-      "firstLine": 134,
-      "lastLine": 134,
+      "firstLine": 135,
+      "lastLine": 135,
       "anchors": [
         "const savedFilesUnchanged=(await Promise.all(files.map(async(f,i)=>digest(await readFile(f.path,\"utf8\"))===before[i]))).every(Boolean);"
       ],
-      "sourceSHA256": "d2f5d22d73e52bb1885529cf6690eae3437f8a83aec7a6c363be6964452feb8d",
+      "sourceSHA256": "c05391cba2cdfc8e2280d13e0cadb39cfbf0ad4225b4a53bce4e62c3d91d196a",
       "narration": "Step 12. Compare saved skill hashes and extract markers from actual text. Marker compliance is an observation, not a complete internal prompt audit. This source excerpt shows the corresponding application statement."
     },
     {

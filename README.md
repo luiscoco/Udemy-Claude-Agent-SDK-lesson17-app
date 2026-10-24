@@ -168,16 +168,16 @@ Only an actual SDK skill-name validation error before init becomes the rejected 
 Source: `src/agent.ts`, lines 130–132. Selected excerpt.
 
 ```typescript
-if(c.mode!=="invalid" || started || !/skill|wildcard/i.test(String(error)))throw error;
+if(c.mode!=="invalid" || started || !(error instanceof Error)
+   || !/^Invalid skill name ['"]\*['"]:/.test(error.message))throw error;
   rejected=true;
-  emit({type:"rejected",stage:"SDK option validation before init",text:redact(error instanceof Error ? error.message : String(error))});
 ```
 
 ### 12. Verify files and actual result markers
 
 Compare saved skill hashes and extract markers from actual text. Marker compliance is an observation, not a complete internal prompt audit.
 
-Source: `src/agent.ts`, lines 134–134. Selected excerpt.
+Source: `src/agent.ts`, lines 135–135. Selected excerpt.
 
 ```typescript
 const savedFilesUnchanged=(await Promise.all(files.map(async(f,i)=>digest(await readFile(f.path,"utf8"))===before[i]))).every(Boolean);
