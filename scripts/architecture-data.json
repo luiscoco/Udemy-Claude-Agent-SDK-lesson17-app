@@ -1,0 +1,273 @@
+{
+  "lanes": [
+    "Student UI",
+    "Node host",
+    "SDK + Claude",
+    "Read guard",
+    "Private files"
+  ],
+  "arrows": [
+    [
+      0,
+      1,
+      "1. Validate the classroom experiment"
+    ],
+    [
+      1,
+      4,
+      "2. Write real SKILL.md artifacts"
+    ],
+    [
+      1,
+      2,
+      "3. Choose omitted, all, a list or none"
+    ],
+    [
+      1,
+      2,
+      "4. Control filesystem discovery"
+    ],
+    [
+      1,
+      2,
+      "5. Expose the Skill tool explicitly"
+    ],
+    [
+      2,
+      1,
+      "6. Guard model tool access"
+    ],
+    [
+      1,
+      2,
+      "7. Choose model workflow or slash dispatch"
+    ],
+    [
+      1,
+      2,
+      "8. Start the actual SDK query"
+    ],
+    [
+      2,
+      1,
+      "9. Preserve discovery metadata from init"
+    ],
+    [
+      2,
+      1,
+      "10. Record completed Skill invocations"
+    ],
+    [
+      2,
+      1,
+      "11. Keep SDK validation errors factual"
+    ],
+    [
+      1,
+      4,
+      "12. Verify files and actual result markers"
+    ],
+    [
+      1,
+      0,
+      "13. Render the readable answer"
+    ]
+  ],
+  "steps": [
+    {
+      "number": 1,
+      "title": "Validate the classroom experiment",
+      "source": "src/agent.ts",
+      "code": "c=validateConfig(c);const id=randomUUID(),files=await prepareWorkspace(c,id);",
+      "language": "typescript",
+      "explanation": "Accept only fixed classroom modes. No arbitrary skill code, prompt, path or command can be submitted by the browser.",
+      "firstLine": 101,
+      "lastLine": 101,
+      "anchors": [
+        "c=validateConfig(c);const id=randomUUID(),files=await prepareWorkspace(c,id);"
+      ],
+      "sourceSHA256": "d2f5d22d73e52bb1885529cf6690eae3437f8a83aec7a6c363be6964452feb8d",
+      "narration": "Step 1. Accept only fixed classroom modes. No arbitrary skill code, prompt, path or command can be submitted by the browser. This source excerpt shows the corresponding application statement."
+    },
+    {
+      "number": 2,
+      "title": "Write real SKILL.md artifacts",
+      "source": "src/agent.ts",
+      "code": "for(const file of files)await writeFile(file.path,file.contents);",
+      "language": "typescript",
+      "explanation": "The host writes two trusted skills as filesystem artifacts before starting the SDK. Full contents are not inserted into the task prompt.",
+      "firstLine": 57,
+      "lastLine": 57,
+      "anchors": [
+        "for(const file of files)await writeFile(file.path,file.contents);"
+      ],
+      "sourceSHA256": "d2f5d22d73e52bb1885529cf6690eae3437f8a83aec7a6c363be6964452feb8d",
+      "narration": "Step 2. The host writes two trusted skills as filesystem artifacts before starting the SDK. Full contents are not inserted into the task prompt. This source excerpt shows the corresponding application statement."
+    },
+    {
+      "number": 3,
+      "title": "Choose omitted, all, a list or none",
+      "source": "src/agent.ts",
+      "code": "if(mode===\"omitted\")return undefined;\n if(mode===\"allow-one\" || mode===\"slash\")return [\"catalog-summary\"];\n if(mode===\"none\")return [];\n if(mode===\"invalid\")return [\"*\"];\n return \"all\";",
+      "language": "typescript",
+      "explanation": "The factory preserves actual omission, enables all skills, selects one exact name, disables model invocation, or passes an invalid wildcard for the SDK to reject.",
+      "firstLine": 40,
+      "lastLine": 44,
+      "anchors": [
+        "if(mode===\"omitted\")return undefined;"
+      ],
+      "sourceSHA256": "d2f5d22d73e52bb1885529cf6690eae3437f8a83aec7a6c363be6964452feb8d",
+      "narration": "Step 3. The factory preserves actual omission, enables all skills, selects one exact name, disables model invocation, or passes an invalid wildcard for the SDK to reject. This source excerpt shows the corresponding application statement."
+    },
+    {
+      "number": 4,
+      "title": "Control filesystem discovery",
+      "source": "src/agent.ts",
+      "code": "settingSources:c.mode===\"no-source\" ? [] : [\"project\"],",
+      "language": "typescript",
+      "explanation": "Project source loads classroom skill metadata. The broken-source experiment uses [] while the actual files remain on disk.",
+      "firstLine": 72,
+      "lastLine": 72,
+      "anchors": [
+        "settingSources:c.mode===\"no-source\" ? [] : [\"project\"],"
+      ],
+      "sourceSHA256": "d2f5d22d73e52bb1885529cf6690eae3437f8a83aec7a6c363be6964452feb8d",
+      "narration": "Step 4. Project source loads classroom skill metadata. The broken-source experiment uses [] while the actual files remain on disk. This source excerpt shows the corresponding application statement."
+    },
+    {
+      "number": 5,
+      "title": "Expose the Skill tool explicitly",
+      "source": "src/agent.ts",
+      "code": "tools:[\"Read\",\"Skill\"],allowedTools:[\"Read\",\"Skill\"],",
+      "language": "typescript",
+      "explanation": "When tools is explicit, Skill must be included. Invocation scope and general tool availability are separate configuration layers.",
+      "firstLine": 74,
+      "lastLine": 74,
+      "anchors": [
+        "tools:[\"Read\",\"Skill\"],allowedTools:[\"Read\",\"Skill\"],"
+      ],
+      "sourceSHA256": "d2f5d22d73e52bb1885529cf6690eae3437f8a83aec7a6c363be6964452feb8d",
+      "narration": "Step 5. When tools is explicit, Skill must be included. Invocation scope and general tool availability are separate configuration layers. This source excerpt shows the corresponding application statement."
+    },
+    {
+      "number": 6,
+      "title": "Guard model tool access",
+      "source": "src/agent.ts",
+      "code": "if(name===\"Skill\")return [\"catalog-summary\",\"api-review\"].includes(String(input.skill));\n return name===\"Read\" && typeof input.file_path===\"string\"\n  && resolve(cwd,input.file_path).toLowerCase()===resolve(cwd,\"catalog.md\").toLowerCase();",
+      "language": "typescript",
+      "explanation": "The host supports only the two classroom Skill names and exact catalog.md reads. Read cannot fetch SKILL.md; Bash, Write and Edit are unavailable.",
+      "firstLine": 62,
+      "lastLine": 64,
+      "anchors": [
+        "if(name===\"Skill\")return [\"catalog-summary\",\"api-review\"].includes(String(input.skill));"
+      ],
+      "sourceSHA256": "d2f5d22d73e52bb1885529cf6690eae3437f8a83aec7a6c363be6964452feb8d",
+      "narration": "Step 6. The host supports only the two classroom Skill names and exact catalog.md reads. Read cannot fetch SKILL.md; Bash, Write and Edit are unavailable. This source excerpt shows the corresponding application statement."
+    },
+    {
+      "number": 7,
+      "title": "Choose model workflow or slash dispatch",
+      "source": "src/agent.ts",
+      "code": "const prompt=c.mode===\"slash\" ? PROMPTS.slash : [\"none\",\"no-source\"].includes(c.mode) ? PROMPTS.plain : PROMPTS.summary;",
+      "language": "typescript",
+      "explanation": "A normal prompt asks the model to invoke a matching available skill. The slash case deliberately uses /api-review, whose dispatch is independent of the model skills list.",
+      "firstLine": 108,
+      "lastLine": 108,
+      "anchors": [
+        "const prompt=c.mode===\"slash\" ? PROMPTS.slash : [\"none\",\"no-source\"].includes(c.mode) ? PROMPTS.plain : PROMPTS.summary;"
+      ],
+      "sourceSHA256": "d2f5d22d73e52bb1885529cf6690eae3437f8a83aec7a6c363be6964452feb8d",
+      "narration": "Step 7. A normal prompt asks the model to invoke a matching available skill. The slash case deliberately uses /api-review, whose dispatch is independent of the model skills list. This source excerpt shows the corresponding application statement."
+    },
+    {
+      "number": 8,
+      "title": "Start the actual SDK query",
+      "source": "src/agent.ts",
+      "code": "const run=query({prompt,options});",
+      "language": "typescript",
+      "explanation": "The SDK discovers metadata, handles selected skill invocation and owns the model/tool loop. The wildcard mode exercises its real startup validator.",
+      "firstLine": 110,
+      "lastLine": 110,
+      "anchors": [
+        "const run=query({prompt,options});"
+      ],
+      "sourceSHA256": "d2f5d22d73e52bb1885529cf6690eae3437f8a83aec7a6c363be6964452feb8d",
+      "narration": "Step 8. The SDK discovers metadata, handles selected skill invocation and owns the model/tool loop. The wildcard mode exercises its real startup validator. This source excerpt shows the corresponding application statement."
+    },
+    {
+      "number": 9,
+      "title": "Preserve discovery metadata from init",
+      "source": "src/agent.ts",
+      "code": "started=true;initSkills=message.skills;",
+      "language": "typescript",
+      "explanation": "The init array lists user-invocable skills and can include bundled entries. It is not the model allowlist, and does not prove invocation.",
+      "firstLine": 115,
+      "lastLine": 115,
+      "anchors": [
+        "started=true;initSkills=message.skills;"
+      ],
+      "sourceSHA256": "d2f5d22d73e52bb1885529cf6690eae3437f8a83aec7a6c363be6964452feb8d",
+      "narration": "Step 9. The init array lists user-invocable skills and can include bundled entries. It is not the model allowlist, and does not prove invocation. This source excerpt shows the corresponding application statement."
+    },
+    {
+      "number": 10,
+      "title": "Record completed Skill invocations",
+      "source": "src/agent.ts",
+      "code": "if(input.tool_name===\"Skill\")skillCalls.push(String(v.skill));",
+      "language": "typescript",
+      "explanation": "A completed Skill tool call is independent evidence of model invocation. Slash dispatch can load a skill without such a tool call.",
+      "firstLine": 89,
+      "lastLine": 89,
+      "anchors": [
+        "if(input.tool_name===\"Skill\")skillCalls.push(String(v.skill));"
+      ],
+      "sourceSHA256": "d2f5d22d73e52bb1885529cf6690eae3437f8a83aec7a6c363be6964452feb8d",
+      "narration": "Step 10. A completed Skill tool call is independent evidence of model invocation. Slash dispatch can load a skill without such a tool call. This source excerpt shows the corresponding application statement."
+    },
+    {
+      "number": 11,
+      "title": "Keep SDK validation errors factual",
+      "source": "src/agent.ts",
+      "code": "if(c.mode!==\"invalid\" || started || !/skill|wildcard/i.test(String(error)))throw error;\n  rejected=true;\n  emit({type:\"rejected\",stage:\"SDK option validation before init\",text:redact(error instanceof Error ? error.message : String(error))});",
+      "language": "typescript",
+      "explanation": "Only an actual SDK skill-name validation error before init becomes the rejected outcome. Other errors remain failures rather than being relabelled as a successful exercise.",
+      "firstLine": 130,
+      "lastLine": 132,
+      "anchors": [
+        "if(c.mode!==\"invalid\" || started || !/skill|wildcard/i.test(String(error)))throw error;"
+      ],
+      "sourceSHA256": "d2f5d22d73e52bb1885529cf6690eae3437f8a83aec7a6c363be6964452feb8d",
+      "narration": "Step 11. Only an actual SDK skill-name validation error before init becomes the rejected outcome. Other errors remain failures rather than being relabelled as a successful exercise. This source excerpt shows the corresponding application statement."
+    },
+    {
+      "number": 12,
+      "title": "Verify files and actual result markers",
+      "source": "src/agent.ts",
+      "code": "const savedFilesUnchanged=(await Promise.all(files.map(async(f,i)=>digest(await readFile(f.path,\"utf8\"))===before[i]))).every(Boolean);",
+      "language": "typescript",
+      "explanation": "Compare saved skill hashes and extract markers from actual text. Marker compliance is an observation, not a complete internal prompt audit.",
+      "firstLine": 134,
+      "lastLine": 134,
+      "anchors": [
+        "const savedFilesUnchanged=(await Promise.all(files.map(async(f,i)=>digest(await readFile(f.path,\"utf8\"))===before[i]))).every(Boolean);"
+      ],
+      "sourceSHA256": "d2f5d22d73e52bb1885529cf6690eae3437f8a83aec7a6c363be6964452feb8d",
+      "narration": "Step 12. Compare saved skill hashes and extract markers from actual text. Marker compliance is an observation, not a complete internal prompt audit. This source excerpt shows the corresponding application statement."
+    },
+    {
+      "number": 13,
+      "title": "Render the readable answer",
+      "source": "src/client.ts",
+      "code": "if (e.type === \"answer\") renderMarkdown($(\"answer\"), e.text);",
+      "language": "typescript",
+      "explanation": "Render real assistant Markdown through parsing and sanitization. Keep discovery, completed tools, scope and direct dispatch distinct in the page.",
+      "firstLine": 20,
+      "lastLine": 20,
+      "anchors": [
+        "if (e.type === \"answer\") renderMarkdown($(\"answer\"), e.text);"
+      ],
+      "sourceSHA256": "2239903a41681384a41e71816a31bf1d0bd5a6fe59a3d11c87eb0156ecf82764",
+      "narration": "Step 13. Render real assistant Markdown through parsing and sanitization. Keep discovery, completed tools, scope and direct dispatch distinct in the page. This source excerpt shows the corresponding application statement."
+    }
+  ]
+}
